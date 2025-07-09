@@ -11,14 +11,8 @@ import {
   AuthResponse
 } from '../types';
 
-let API_BASE_URL = '';
-if (process.env.REACT_APP_API_URL) {
-  API_BASE_URL = process.env.REACT_APP_API_URL;
-} else if (window && window.location && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-  API_BASE_URL = 'http://localhost:8000/api';
-} else {
-  API_BASE_URL = 'https://withus-project.onrender.com/api';
-}
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://withus-project.onrender.com/api';
+//const API_BASE_URL = 'http://localhost:8000/api';
 
 // Create axios instance
 const api = axios.create({

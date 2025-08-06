@@ -67,7 +67,7 @@ const Register: React.FC = () => {
           <div className="space-y-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Full Name
+                Enter your Full Name
               </label>
               <input
                 id="name"

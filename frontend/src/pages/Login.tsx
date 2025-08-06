@@ -62,7 +62,7 @@ const Login: React.FC = () => {
           <div className="space-y-4">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
+                Enter your Email address
               </label>
               <input
                 id="email"

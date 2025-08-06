@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Item } from '../types';
 import { itemsAPI } from '../services/api';
 import ItemCard from '../components/ItemCard';
+import ReviewsCarousel from '../components/ReviewsCarousel';
 
 const Home: React.FC = () => {
   const [featuredItems, setFeaturedItems] = useState<Item[]>([]);
@@ -86,6 +87,14 @@ const Home: React.FC = () => {
               View All Items
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Reviews Carousel Section */}
+      <section className="py-12 bg-white">
+        <div className=" mx-auto ">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">What Our Users Say</h2>
+          <ReviewsCarousel />
         </div>
       </section>
 

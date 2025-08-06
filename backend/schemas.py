@@ -59,6 +59,17 @@ class Review(ReviewBase):
     class Config:
         from_attributes = True
 
+class ReviewWithUser(ReviewBase):
+    id: int
+    user_id: int
+    item_id: int
+    created_at: datetime
+    user_name: str
+    # Optionally, add user_initial: str if you want to send the first letter
+
+    class Config:
+        from_attributes = True
+
 # Order Schemas
 class OrderBase(BaseModel):
     item_id: int

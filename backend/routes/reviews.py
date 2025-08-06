@@ -4,7 +4,7 @@ from typing import List
 
 from database import get_db
 from models import Review, User, Item
-from schemas import ReviewCreate, Review as ReviewSchema
+from schemas import ReviewCreate, Review as ReviewSchema, ReviewWithUser
 from auth import get_current_user
 
 router = APIRouter()
@@ -87,3 +87,21 @@ def get_user_reviews(
     
     reviews = db.query(Review).filter(Review.user_id == user_id).all()
     return reviews 
+
+@router.get("/all", response_model=List[ReviewWithUser])
+def get_all_reviews(db: Session = Depends(get_db)):
+    """Get all reviews with user info."""
+    reviews = db.query(Review).all()
+    result = []
+    for review in reviews:
+        user = db.query(User).filter(User.id == review.user_id).first()
+        result.append({
+            'id': review.id,
+            'user_id': review.user_id,
+            'item_id': review.item_id,
+            'rating': review.rating,
+            'comment': review.comment,
+            'created_at': review.created_at,
+            'user_name': user.name if user else "Unknown"
+        })
+    return result 

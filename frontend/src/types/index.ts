@@ -32,6 +32,11 @@ export interface Review {
   created_at: string;
 }
 
+export interface ReviewWithUser extends Review {
+  user_name: string;
+  // Optionally, user_initial?: string;
+}
+
 export interface Order {
   id: number;
   user_id: number;

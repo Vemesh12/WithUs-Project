@@ -8,7 +8,8 @@ import {
   OrderWithDetails,
   LoginCredentials,
   RegisterData,
-  AuthResponse
+  AuthResponse,
+  ReviewWithUser
 } from '../types';
 
 //const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://withus-project.onrender.com/api';
@@ -89,6 +90,11 @@ export const reviewsAPI = {
 
   getByUserId: async (userId: number): Promise<Review[]> => {
     const response = await api.get(`/reviews/user/${userId}`);
+    return response.data;
+  },
+
+  getAll: async (): Promise<ReviewWithUser[]> => {
+    const response = await api.get('/reviews/all');
     return response.data;
   },
 };

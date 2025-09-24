@@ -101,6 +101,14 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     email: Optional[str] = None
 
+# Password reset schemas
+class PasswordResetRequest(BaseModel):
+    email: EmailStr
+
+class PasswordResetConfirm(BaseModel):
+    token: str
+    new_password: str
+
 # Response Schemas
 class ItemWithReviews(Item):
     reviews: List[Review] = []

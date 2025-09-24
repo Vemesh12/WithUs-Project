@@ -7,6 +7,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Items from './pages/Items';
 import ItemDetail from './pages/ItemDetail';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import MyOrders from './pages/MyOrders';
 import OrderDetails from './pages/OrderDetails';
 import AdminOrders from './pages/AdminOrders';
@@ -22,6 +24,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/items" element={<Items />} />
             <Route path="/items/:id" element={<ItemDetail />} />
             <Route path="/my-orders" element={<MyOrders />} />

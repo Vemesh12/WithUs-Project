@@ -36,9 +36,15 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   response => response,
   error => {
-    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+    const status = error?.response?.status;
+    const originalUrl: string | undefined = error?.config?.url;
+    const isAuthLogin = originalUrl?.includes('/auth/login');
+    const hadToken = Boolean(localStorage.getItem('token'));
+
+    if ((status === 401 || status === 403) && !isAuthLogin && hadToken) {
       localStorage.removeItem('token');
       window.location.href = '/login?expired=1';
+      return; // stop further handling after redirect
     }
     return Promise.reject(error);
   }
@@ -53,6 +59,16 @@ export const authAPI = {
 
   register: async (userData: RegisterData): Promise<User> => {
     const response = await api.post('/auth/register', userData);
+    return response.data;
+  },
+
+  requestPasswordReset: async (email: string): Promise<{ message: string }> => {
+    const response = await api.post('/auth/password/forgot', { email });
+    return response.data;
+  },
+
+  resetPassword: async (token: string, newPassword: string): Promise<{ message: string }> => {
+    const response = await api.post('/auth/password/reset', { token, new_password: newPassword });
     return response.data;
   },
 };

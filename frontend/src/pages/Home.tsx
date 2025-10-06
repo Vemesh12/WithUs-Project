@@ -1,22 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Item } from '../types';
 import { itemsAPI } from '../services/api';
-import ItemCard from '../components/ItemCard';
+// import ItemCard from '../components/ItemCard';
 import ReviewsCarousel from '../components/ReviewsCarousel';
+import { motion, useInView } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Package, ShieldCheck, Users  } from 'lucide-react';
 
 const Home: React.FC = () => {
   const [featuredItems, setFeaturedItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // Refs for scroll animations
+  const featuredRef = useRef(null);
+  const reviewsRef = useRef(null);
+  const featuresRef = useRef(null);
+  
+  // InView hooks for scroll animations
+  const featuredInView = useInView(featuredRef, { once: false, margin: "-100px" });
+  const reviewsInView = useInView(reviewsRef, { once: false, margin: "-100px" });
+  const featuresInView = useInView(featuresRef, { once: false, margin: "-100px" });
 
   useEffect(() => {
     const fetchFeaturedItems = async () => {
       try {
         const items = await itemsAPI.getAll();
-        // Show first 6 items as featured
-        setFeaturedItems(items.slice(0, 6));
+        // Only take first 5
+        setFeaturedItems(items.slice(0, 5));
       } catch (error) {
-        console.error('Error fetching featured items:', error);
+        console.error("Error fetching featured items:", error);
       } finally {
         setLoading(false);
       }
@@ -26,129 +42,258 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Fresh Items Delivered to Your Doorstep
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-primary-100">
-              Order fresh fruits, dairy, beverages, and more with delivery or in-person service
-            </p>
-            <div className="space-x-4">
-              <Link
-                to="/items"
-                className="bg-white text-primary-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-colors duration-200"
-              >
-                Browse Items
-              </Link>
-              <Link
-                to="/register"
-                className="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-3 rounded-lg font-semibold text-lg transition-colors duration-200"
-              >
-                Get Started
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section className="bg-black text-white min-h-screen flex items-center -mt-20 ">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div className="text-center">
+    <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+      <h1 className="text-[16px] md:text-[28px] font-bold mb-4">
+      Farm to Door by <span className="text-[#e9ff09]">WithVemesh.</span>
+      </h1>
+      <h1 className="text-4xl text-[#e9ff09] md:text-6xl font-bold mb-6">Not Just Another Grocery Delivery Service!</h1>
+      <p className="text-xl md:text-2xl text-[#898989] mb-12">
+        delivering farm-fresh fruits, vegetables, dairy, and beverages right to your doorstep — fast, fresh, and hassle-free.
+      </p>
+      </motion.div>
+      <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="space-x-4"
+          >
+      <div className="md:space-x-4 md:flex-row md:flex items-center md:items-center md:justify-center md:space-y-0 space-y-6 flex flex-col">
+        <Link
+          to="/items"
+          className="bg-[#e9ff09] text-black px-8 py-4 rounded-lg font-bold text-[24px] transition-colors duration-200"
+        >
+          Browse Items
+        </Link>
+        <Link
+          to="/register"
+          className="border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-lg font-bold text-[24px] transition-colors duration-200"
+        >
+          Get Started
+        </Link>
+      </div>
+      </motion.div>
+    </div>
+  </div>
+</section>
+
 
       {/* Featured Items Section */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Featured Items
-            </h2>
-            <p className="text-lg text-gray-600">
-              Discover our most popular fresh items
-            </p>
-          </div>
+      <section ref={featuredRef} className="py-16 bg-black min-h-screen flex items-center overflow-hidden">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div className="text-center mb-12">
+    <motion.div
+            initial={{ opacity: 0, x: -100 }}
+            animate={featuredInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+      <h2 className="text-3xl md:text-6xl font-bold text-[#e9ff09] mb-4">
+        Featured Items
+      </h2>
+      <p className="text-lg text-white">
+        Discover our most popular fresh items
+      </p>
+      </motion.div>
+    </div>
+  
 
-          {loading ? (
-            <div className="flex justify-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredItems.map((item) => (
-                <ItemCard key={item.id} item={item} />
-              ))}
-            </div>
-          )}
-
-          <div className="text-center mt-12">
-            <Link
-              to="/items"
-              className="btn-primary text-lg px-8 py-3"
-            >
-              View All Items
-            </Link>
-          </div>
+    {loading ? (
+      <div className="flex justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500"></div>
+      </div>
+    ) : (
+      <>
+        {/* Desktop → Infinite Auto Scroll */}
+        <div className="hidden lg:block relative overflow-hidden w-full">
+        <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={featuredInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          >
+          <motion.div
+            className="flex space-x-8"
+            animate={featuredInView ? { x: ["0%", "-100%"] } : { x: "0%" }}
+            transition={{
+              repeat: Infinity,
+              ease: "linear",
+              duration: 25,
+            }}
+          >
+            {[...featuredItems, ...featuredItems].map((item, index) => (
+              <div
+                key={index}
+                className="min-w-[30%] max-w-[400px] bg-white shadow-lg rounded-xl p-6 flex flex-col items-center"
+              >
+                <img
+                  src={item.image_url || "/placeholder.png"}
+                  alt={item.name}
+                  className="h-60 w-60 object-cover rounded-lg mb-6"
+                />
+                <h3 className="font-semibold text-xl text-black">
+                  {item.name}
+                </h3>
+                {/* <p className="text-md text-gray-600 mt-2">
+                  ₹{item.price?.toFixed(2)}
+                </p> */}
+              </div>
+            ))}
+          </motion.div>
+          </motion.div>
         </div>
-      </section>
+        
+
+        {/* Mobile → Swiper with dots */}
+        <div className="block lg:hidden relative">
+        <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={featuredInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          >
+  <Swiper
+    modules={[Pagination]}
+    spaceBetween={16}
+    slidesPerView={1}
+    pagination={{ clickable: true, el: ".swiper-pagination-custom" }}
+  >
+    {featuredItems.map((item, index) => (
+      <SwiperSlide key={index}>
+        <div className="bg-white shadow-lg rounded-xl p-6 flex flex-col items-center mx-auto max-w-sm">
+          <img
+            src={item.image_url || "/placeholder.png"}
+            alt={item.name}
+            className="h-48 w-48 object-cover rounded-lg mb-6"
+          />
+          <h3 className="font-semibold text-xl text-gray-800 text-center">
+            {item.name}
+          </h3>
+        </div>
+      </SwiperSlide>
+    ))}
+  </Swiper>
+
+  {/* External Pagination Dots */}
+  <div className="swiper-pagination-custom flex justify-center mt-4"></div>
+  </motion.div>
+</div>
+
+
+      </>
+    )}
+
+    <div className="text-center mt-12">
+    <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={featuredInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+            className="space-x-4"
+          >
+      <Link
+        to="/items"
+        className="bg-[#e9ff09] text-black font-bold px-8 py-4 rounded-lg text-[24px] transition-colors duration-200"
+      >
+        View All Items
+      </Link>
+      </motion.div>
+    </div>
+  </div>
+</section>
+
+
 
       {/* Reviews Carousel Section */}
-      <section className="py-12 bg-white">
-        <div className=" mx-auto ">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">What Our Users Say</h2>
-          <ReviewsCarousel />
+      <section ref={reviewsRef} className="py-20 bg-black overflow-hidden">
+        <div className=" mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={reviewsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <h2 className="text-3xl font-bold md:text-5xl text-white mb-8 text-center">What Our <span className='text-[#e9ff09]'>Users </span>Say</h2>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={reviewsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          >
+            <ReviewsCarousel />
+          </motion.div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="bg-gray-50 py-16">
+      <section id="why-withus" ref={featuresRef} className="bg-black py-16 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Why Choose WithUs?
-            </h2>
+            <motion.div
+              initial={{ opacity: 0, y: -50 }}
+              animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <h2 className="text-3xl font-bold text-white mb-4">
+                Why Choose <span className='text-[#e9ff09]'>WithUs?</span>
+              </h2>
+            </motion.div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
+            <motion.div 
+              className="text-center"
+              initial={{ opacity: 0, y: 50 }}
+              animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            >
               <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
+                <Package/>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-semibold text-white mb-2">
                 Fast Delivery
               </h3>
-              <p className="text-gray-600">
+              <p className="text-[#898989]">
                 Get your items delivered quickly and safely to your doorstep
               </p>
-            </div>
+            </motion.div>
 
-            <div className="text-center">
+            <motion.div 
+              className="text-center"
+              initial={{ opacity: 0, y: 100 }}
+              animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+            >
               <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+               <ShieldCheck />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-semibold text-white mb-2">
                 Quality Assured
               </h3>
-              <p className="text-gray-600">
+              <p className="text-[#898989]">
                 All our items are carefully selected and quality tested
               </p>
-            </div>
+            </motion.div>
 
-            <div className="text-center">
+            <motion.div 
+              className="text-center"
+              initial={{ opacity: 0, y: 50 }}
+              animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+            >
               <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+                <Users/>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-semibold text-white mb-2">
                 In-Person Service
               </h3>
-              <p className="text-gray-600">
+              <p className="text-[#898989]">
                 Schedule in-person services for a personalized experience
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

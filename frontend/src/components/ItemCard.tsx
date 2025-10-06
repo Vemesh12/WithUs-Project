@@ -38,8 +38,12 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
           <span className="text-2xl font-bold text-primary-600">
             ₹{item.price}
           </span>
-          <span className="text-sm text-gray-500">
-            Stock: {item.stock_quantity}
+          <span className={`text-sm font-medium ${
+            item.stock_quantity > 0 
+              ? 'text-green-600' 
+              : 'text-red-600'
+          }`}>
+            {item.stock_quantity > 0 ? 'In Stock' : 'Out of Stock'}
           </span>
         </div>
         
@@ -50,9 +54,13 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
           
           <Link
             to={`/items/${item.id}`}
-            className="btn-primary text-sm"
+            className={`btn-primary text-sm ${
+              item.stock_quantity === 0 
+                ? 'opacity-50 cursor-not-allowed pointer-events-none' 
+                : ''
+            }`}
           >
-            View Details
+            {item.stock_quantity === 0 ? 'Out of Stock' : 'View Details'}
           </Link>
         </div>
       </div>

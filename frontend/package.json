@@ -14,10 +14,13 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "axios": "^1.10.0",
+    "framer-motion": "^12.23.20",
+    "lucide-react": "^0.544.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3",
     "react-scripts": "5.0.1",
+    "swiper": "^12.0.2",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },

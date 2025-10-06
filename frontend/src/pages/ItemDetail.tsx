@@ -171,8 +171,12 @@ const ItemDetail: React.FC = () => {
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
                   {item.category}
                 </span>
-                <span className="text-sm text-gray-500">
-                  Stock: {item.stock_quantity}
+                <span
+                  className={`text-sm font-medium ${
+                    item.stock_quantity > 0 ? 'text-green-600' : 'text-red-600'
+                  }`}
+                >
+                  {item.stock_quantity > 0 ? 'In Stock' : 'Out of Stock'}
                 </span>
               </div>
               <div className="text-3xl font-bold text-primary-600 mb-4">

@@ -25,7 +25,12 @@ def init_db():
             role="admin"
         )
         
-        
+        customer_user = User(
+            name="John Doe",
+            email="john@example.com",
+            password_hash=get_password_hash("password123"),
+            role="customer"
+        )
         
         db.add(admin_user)
         db.add(customer_user)
@@ -38,7 +43,7 @@ def init_db():
             Item(
                 name="Fresh Mangoes",
                 description="Sweet and juicy Alphonso mangoes from Maharashtra",
-                image_url="https://images.unsplash.com/photo-1553279768-865429fa0078?w=400",
+                image_url="/mango_image.jpg",
                 price=120.0,
                 category="fruits",
                 stock_quantity=50
@@ -46,7 +51,7 @@ def init_db():
             Item(
                 name="Organic Milk",
                 description="Pure organic cow milk, delivered fresh daily",
-                image_url="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400",
+                image_url="/milk_image.jpg",
                 price=60.0,
                 category="dairy",
                 stock_quantity=100
@@ -54,7 +59,7 @@ def init_db():
             Item(
                 name="Coconut Water",
                 description="Natural coconut water, rich in electrolytes",
-                image_url="https://images.unsplash.com/photo-1628359355624-855775b5c9c4?w=400",
+                image_url="/coconuts.jpg",
                 price=40.0,
                 category="beverages",
                 stock_quantity=75
@@ -62,7 +67,7 @@ def init_db():
             Item(
                 name="Fresh Apples",
                 description="Crispy red apples, perfect for health",
-                image_url="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400",
+                image_url="/apple_image.jpg",
                 price=80.0,
                 category="fruits",
                 stock_quantity=60
@@ -70,7 +75,7 @@ def init_db():
             Item(
                 name="Curd",
                 description="Homemade curd, probiotic rich",
-                image_url="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400",
+                image_url="/curd_image.jpg",
                 price=45.0,
                 category="dairy",
                 stock_quantity=80
@@ -78,7 +83,7 @@ def init_db():
             Item(
                 name="Mineral Water",
                 description="Pure mineral water, 1L bottles",
-                image_url="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400",
+                image_url="/mineral_water.jpg",
                 price=20.0,
                 category="beverages",
                 stock_quantity=200

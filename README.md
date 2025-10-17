@@ -1,14 +1,15 @@
-# WithUs - Consumable Items Platform
+# WithUs - Farm to Door Delivery Platform
 
-A Swiggy/Zomato-style platform for ordering consumable items like water, fruits, milk, etc. with delivery and in-person service options.
+A modern farm-to-door delivery platform specializing in fresh fruits, vegetables, dairy products, and beverages. Experience the convenience of having farm-fresh produce delivered right to your doorstep - fast, fresh, and hassle-free.
 
 ## 🚀 Features
 
-- Browse consumable items (fruits, milk, water, etc.)
-- View item details and customer reviews
-- Order items for delivery or schedule in-person services
-- User authentication and order management
-- Responsive design with modern UI
+- **Farm-Fresh Products**: Browse fresh fruits, vegetables, dairy, and beverages
+- **Direct Farm Delivery**: Get produce delivered directly from farm to your door
+- **Item Details & Reviews**: View detailed product information and customer reviews
+- **Flexible Ordering**: Order items for delivery or schedule in-person services
+- **User Management**: Complete authentication and order tracking system
+- **Modern UI**: Responsive design with beautiful, intuitive interface
 
 ## 🛠️ Tech Stack
 
@@ -30,8 +31,9 @@ A Swiggy/Zomato-style platform for ordering consumable items like water, fruits,
 WithUs-Project/
 ├── frontend/          # React TypeScript frontend
 ├── backend/           # FastAPI Python backend
-├── database/          # Database scripts and migrations
-└── docs/             # Documentation
+├── README.md         # Project overview
+├── SETUP.md          # Detailed setup guide
+└── start.bat         # Quick start script
 ```
 
 ## 🚀 Quick Start

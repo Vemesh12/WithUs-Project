@@ -1,6 +1,6 @@
 # WithUs Project Setup Guide
 
-This guide will help you set up the WithUs platform from scratch.
+This guide will help you set up the WithUs farm-to-door delivery platform from scratch.
 
 ## Prerequisites
 
@@ -17,10 +17,9 @@ Before you begin, make sure you have the following installed:
 WithUs-Project/
 ├── frontend/          # React TypeScript frontend
 ├── backend/           # FastAPI Python backend
-├── database/          # Database scripts
-├── docs/             # Documentation
 ├── README.md         # Project overview
-└── SETUP.md          # This file
+├── SETUP.md          # This file
+└── start.bat         # Quick start script
 ```
 
 ## Step 1: Backend Setup
@@ -46,7 +45,7 @@ pip install -r requirements.txt
 2. **Create a database**:
    ```sql
    CREATE DATABASE withus_db;
-   CREATE USER withus_user WITH PASSWORD 'your_password';
+   CREATE USER withus_user WITH PASSWORD 'your_secure_password';
    GRANT ALL PRIVILEGES ON DATABASE withus_db TO withus_user;
    ```
 
@@ -58,8 +57,8 @@ pip install -r requirements.txt
 
 4. **Edit `.env` file** with your database credentials:
    ```env
-   DATABASE_URL=postgresql://withus_user:your_password@localhost:5432/withus_db
-   SECRET_KEY=your-super-secret-key-here
+   DATABASE_URL=postgresql://withus_user:your_secure_password@localhost:5432/withus_db
+   SECRET_KEY=your-super-secret-key-here-make-it-long-and-random
    ALGORITHM=HS256
    ACCESS_TOKEN_EXPIRE_MINUTES=30
    HOST=0.0.0.0
@@ -88,9 +87,6 @@ API documentation: `http://localhost:8000/docs`
 
 ## Step 2: Frontend Setup
 
-
-## Step 2: Frontend Setup
-
 ### 2.1 Install Dependencies
 
 ```bash
@@ -107,73 +103,6 @@ npm start
 
 The frontend will be available at `http://localhost:3000`
 
----
-
-## Step 1: Backend App Creation (FastAPI + PostgreSQL)
-
-### 1.1 Create Backend Project Structure
-
-If starting from scratch, create the backend folder and files:
-
-```powershell
-mkdir backend
-cd backend
-New-Item main.py, models.py, schemas.py, database.py, auth.py, email_utils.py, requirements.txt, init_db.py
-mkdir routes
-New-Item routes\__init__.py, routes\auth.py, routes\items.py, routes\orders.py, routes\reviews.py
-```
-
-### 1.2 Set Up Python Environment
-
-```powershell
-python -m venv venv
-venv\Scripts\activate
-```
-
-### 1.3 Install Dependencies
-
-Add required packages to `requirements.txt` (FastAPI, SQLAlchemy, psycopg2, python-jose, passlib, etc.), then run:
-
-```powershell
-pip install -r requirements.txt
-```
-
-### 1.4 Configure Environment Variables
-
-Copy `env.example` to `.env` and edit with your database credentials:
-
-```powershell
-cp env.example .env
-# Edit .env with your DB URL and secrets
-```
-
-Example `.env`:
-```env
-DATABASE_URL=postgresql://withus_user:your_password@localhost:5432/withus_db
-SECRET_KEY=your-super-secret-key-here
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-HOST=0.0.0.0
-PORT=8000
-DEBUG=True
-```
-
-### 1.5 Initialize Database
-
-```powershell
-python init_db.py
-```
-
-This will create the database tables and add sample data.
-
-### 1.6 Start Backend Server
-
-```powershell
-python main.py
-```
-
-The API will be available at `http://localhost:8000`
-API documentation: `http://localhost:8000/docs`
 
 ## Step 3: Test the Application
 
@@ -197,19 +126,14 @@ API documentation: `http://localhost:8000/docs`
 
 ## Sample Data
 
-The database comes pre-populated with:
+The database comes pre-populated with sample farm-fresh items:
 
-- **Users**:
-  - Admin: `admin@withus.com` / `admin123`
-  - Customer: `john@example.com` / `password123`
+- **Fresh Fruits**: Mangoes, Apples, Bananas
+- **Dairy Products**: Organic Milk, Fresh Curd
+- **Beverages**: Coconut Water, Mineral Water
+- **Vegetables**: Fresh seasonal produce
 
-- **Items**:
-  - Fresh Mangoes (₹120)
-  - Organic Milk (₹60)
-  - Coconut Water (₹40)
-  - Fresh Apples (₹80)
-  - Curd (₹45)
-  - Mineral Water (₹20)
+*Note: Default admin credentials are created during database initialization. Please change them immediately after first login.*
 
 ## Troubleshooting
 

@@ -53,7 +53,7 @@ const Home: React.FC = () => {
             transition={{ duration: 1, ease: "easeOut" }}
           >
       <h1 className="text-[16px] md:text-[28px] font-bold mb-4">
-      Farm to Door by <span className="text-[#e9ff09]">WithVemesh.</span>
+      Farm to Door by <span className="text-[#e9ff09]">WithVemesh...</span>
       </h1>
       <h1 className="text-4xl text-[#e9ff09] md:text-6xl font-bold mb-6">Not Just Another Grocery Delivery Service!</h1>
       <p className="text-xl md:text-2xl text-[#898989] mb-12">
